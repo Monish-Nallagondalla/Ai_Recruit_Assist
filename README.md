@@ -1,157 +1,97 @@
-Ai_Recruit_Assist
+# Ai_Recruit_Assist
 
-Ai_Recruit_Assist is a Streamlit-based web application designed to streamline the candidate screening process for recruiters. It extracts candidate information (name and email) from a resume PDF, screens candidates using AI (via Groq API), and generates interview invitation emails. The app leverages large language models (LLMs) to evaluate resumes against job descriptions, assign scores, and provide feedback.
+**Ai_Recruit_Assist** is a Streamlit-based web application designed to streamline the candidate screening process for recruiters. It extracts candidate information (name and email) from resumes (PDFs), screens candidates using AI (via Groq API), and generates interview invitation emails. The app leverages large language models (LLMs) to evaluate resumes against job descriptions, assign scores, and provide detailed feedback.
 
-Features
+---
 
+## Features
 
+- **Resume Parsing**: Extract candidate names and emails from PDF resumes using LLMs and regex.
+- **Candidate Screening**: Evaluate candidates based on resume content and job descriptions using Groq's `llama3-8b-8192` model.
+- **Scoring and Feedback**: Assign scores (0–10) and provide feedback on candidate suitability.
+- **Interview Scheduling**: Automatically schedule mock interviews for candidates meeting score thresholds.
+- **Email Generation**: Draft professional interview invitation emails with editable recipient addresses.
+- **User-Friendly Interface**: Built with Streamlit for an intuitive and seamless user experience.
 
+---
 
+## Prerequisites
 
-Resume Parsing: Extracts candidate name and email from a PDF resume using LLMs and regex.
+- Python 3.8 or higher  
+- A Groq API key (sign up at [Groq Console](https://groq.io) to obtain one)  
+- Git (for cloning the repository)  
 
+---
 
+## Installation
 
-Candidate Screening: Evaluates candidates based on resume content and job description using Groq's llama3-8b-8192 model.
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/Monish-Nallagondalla/Ai_Recruit_Assist.git
+   cd Ai_Recruit_Assist
 
+2. **Set Up a Virtual Environment** (optional but recommended):
 
+   ```bash
+   python -m venv myenv
+   source myenv/bin/activate  # On Windows: myenv\Scripts\activate
+   ```
 
-Scoring and Feedback: Assigns a score (0-10) and provides detailed feedback on candidate suitability.
+3. **Install Dependencies**:
 
+   ```bash
+   pip install -r requirements.txt
+   ```
 
+4. **Configure Environment**:
+   Create a `config.yaml` file in the `config` directory or a `.env` file in the project root. Add your Groq API key and other configurations:
 
-Interview Scheduling: Automatically schedules a mock interview for candidates above a score threshold.
+   * `config/config.yaml`:
 
+     ```yaml
+     groq_api_key: "your-groq-api-key"
+     from_email: "recruiter@ai-recruit-assist.com"
+     timezone: "Asia/Kolkata"
+     ```
+   * OR `.env`:
 
+     ```env
+     GROQ_API_KEY=your-groq-api-key
+     FROM_EMAIL=recruiter@ai-recruit-assist.com
+     TIMEZONE=Asia/Kolkata
+     ```
 
-Email Generation: Drafts professional interview invitation emails with editable email addresses.
+---
 
+## Usage
 
+1. **Run the Application**:
 
-User-Friendly UI: Built with Streamlit for an intuitive interface.
+   ```bash
+   streamlit run app.py
+   ```
 
-Prerequisites
+2. **Access the App**:
+   Open your browser and navigate to [http://localhost:8501](http://localhost:8501).
 
+3. **Steps to Use**:
 
+   * Upload a resume PDF (e.g., `Monish_2025_2.pdf`).
+   * Enter a job description (e.g., “We are hiring a Data Scientist! Requirements: Proficiency in Python, experience with ML frameworks, strong statistical skills, etc.”).
+   * Click **Screen Candidate**.
 
+4. **Review Results**:
 
+   * View extracted candidate name and email (with editable options).
+   * Check the candidate’s score and feedback.
+   * For candidates scoring above the threshold (e.g., 7.0), the app schedules a mock interview and drafts an email.
+   * Review and send the email (output displayed in the console).
 
-Python 3.8 or higher
+---
 
+## Project Structure
 
-
-A Groq API key (sign up at Groq Console to obtain one)
-
-
-
-Git (for cloning the repository)
-
-Installation
-
-
-
-
-
-Clone the Repository:
-
-git clone https://github.com/Monish-Nallagondalla/Ai_Recruit_Assist.git
-cd Ai_Recruit_Assist
-
-
-
-Set Up a Virtual Environment (optional but recommended):
-
-python -m venv myenv
-source myenv/bin/activate  # On Windows: myenv\Scripts\activate
-
-
-
-Install Dependencies:
-
-pip install -r requirements.txt
-
-
-
-Configure Environment:
-
-
-
-
-
-Create a config.yaml file in the config directory or a .env file in the project root.
-
-
-
-Add your Groq API key and other configurations:
-
-# config/config.yaml
-groq_api_key: "your-groq-api-key"
-from_email: "recruiter@ai-recruit-assist.com"
-timezone: "Asia/Kolkata"
-
-Or:
-
-# .env
-GROQ_API_KEY=your-groq-api-key
-FROM_EMAIL=recruiter@ai-recruit-assist.com
-TIMEZONE=Asia/Kolkata
-
-Usage
-
-
-
-
-
-Run the Application:
-
-streamlit run app.py
-
-
-
-Access the App:
-
-
-
-
-
-Open your browser and go to http://localhost:8501.
-
-
-
-Upload a resume PDF (e.g., Monish_2025_2.pdf).
-
-
-
-Enter a job description (e.g., "We are hiring a Data Scientist! Requirements: Proficiency in Python, R, or similar languages. Experience with machine learning frameworks (e.g., TensorFlow, PyTorch). Strong statistical analysis skills. Bonus: Experience with big data tools (e.g., Hadoop, Spark).").
-
-
-
-Click "Screen Candidate".
-
-
-
-Review Results:
-
-
-
-
-
-The app will display the extracted candidate name and email (with an option to edit the email).
-
-
-
-It will show the candidate's score and feedback.
-
-
-
-If the score is above the threshold (7.0), it schedules a mock interview and drafts an email.
-
-
-
-You can review the email and click "Send Email" to mock-send it (output will be printed to the console).
-
-Project Structure
-
+```
 Ai_Recruit_Assist/
 │
 ├── app.py                     # Main Streamlit app
@@ -163,7 +103,7 @@ Ai_Recruit_Assist/
 │   └── Ai_Recruit_Assist/
 │       ├── components/
 │       │   ├── candidate_screening.py  # Screening logic using Groq API
-│       │   └── email_handler.py       # Email generation and mock sending
+│       │   └── email_handler.py        # Email generation and mock sending
 │       ├── constants/
 │       │   └── constants.py           # Constants (e.g., score threshold)
 │       └── utils/
@@ -171,115 +111,76 @@ Ai_Recruit_Assist/
 │           └── pdf_processor.py       # PDF parsing and info extraction
 ├── tests/                     # Unit tests (optional, not fully implemented)
 └── README.md                  # Project documentation
+```
 
-Dependencies
+---
 
+## Dependencies
 
+* `streamlit`: For the web interface
+* `pypdf`: For PDF parsing
+* `groq`: For interacting with the Groq API
+* `pydantic`: For data validation and modeling
+* `python-dotenv`: For managing environment variables
 
+See `requirements.txt` for the complete list.
 
+---
 
-streamlit: For the web interface
+## Troubleshooting
 
+### Groq API Errors:
 
+* Ensure your API key is valid and has sufficient quota. Check usage at [Groq Console](https://groq.io).
+* For rate limits, wait a few seconds and retry or reduce `max_tokens` in `groq_client.py`.
 
-pypdf: For PDF parsing
+### PDF Parsing Issues:
 
+* Ensure the resume PDF contains extractable text and a valid email format (e.g., `user@domain.com`).
+* Adjust the LLM prompt in `pdf_processor.py` for specific resume formats.
 
+### JSON Parsing Errors:
 
-groq: For interacting with the Groq API
+* Check console logs for `Raw Groq response: ...` to debug.
+* Modify prompts in `candidate_screening.py` or `email_handler.py` if needed.
 
+---
 
+## Contributing
 
-pydantic: For data validation and modeling
+Contributions are welcome!
 
+1. Fork the repository.
+2. Create a new branch:
 
+   ```bash
+   git checkout -b feature/your-feature
+   ```
+3. Commit your changes:
 
-python-dotenv: For environment variable management
+   ```bash
+   git commit -m "Add your feature"
+   ```
+4. Push to your branch:
 
-See requirements.txt for the full list.
+   ```bash
+   git push origin feature/your-feature
+   ```
+5. Open a pull request.
 
-Troubleshooting
+---
 
+## License
 
+This project is licensed under the MIT License. See the `LICENSE` file for details.
 
+---
 
+## Contact
 
-Groq API Errors:
+For issues or inquiries, open an issue on GitHub or contact the maintainer:
+📧 **[nsmonish@gmail.com](mailto:nsmonish@gmail.com)**
 
+---
 
-
-
-
-Ensure your API key is valid and has sufficient quota. Check usage at Groq Console.
-
-
-
-If you hit rate limits, wait a few seconds and retry, or reduce max_tokens in groq_client.py.
-
-
-
-PDF Parsing Issues:
-
-
-
-
-
-Ensure the resume PDF contains extractable text and a standard email format (e.g., user@domain.com).
-
-
-
-If name extraction fails, the LLM prompt in pdf_processor.py may need adjustment based on your resume format.
-
-
-
-JSON Parsing Errors:
-
-
-
-
-
-Check the console for Raw Groq response: ... logs to debug invalid JSON responses.
-
-
-
-Adjust prompts in candidate_screening.py or email_handler.py if needed.
-
-Contributing
-
-Contributions are welcome! Please follow these steps:
-
-
-
-
-
-Fork the repository.
-
-
-
-Create a new branch (git checkout -b feature/your-feature).
-
-
-
-Make your changes and commit (git commit -m "Add your feature").
-
-
-
-Push to your branch (git push origin feature/your-feature).
-
-
-
-Open a pull request.
-
-Please ensure your code follows the existing style and includes appropriate tests.
-
-License
-
-This project is licensed under the MIT License. See the LICENSE file for details (if added).
-
-Contact
-
-For issues or inquiries, please open an issue on GitHub or contact the maintainer at nsmonish@gmail.com.
-
-
-
-Built with ❤️ by Monish Nallagondalla
+**Built with ❤️ by Monish Nallagondalla**
